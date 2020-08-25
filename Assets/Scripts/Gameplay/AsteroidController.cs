@@ -16,25 +16,27 @@ public class AsteroidController : MonoBehaviour
     void Start()
     {
         rb_asteroid = GetComponent<Rigidbody>();
-        if (rb_asteroid)
-        {
-            SetRandomForce(rb_asteroid, initialForce);
-            SetRandomTorque(rb_asteroid, initialTorque);
+		if (rb_asteroid)
+		{
+			SetRandomForce(rb_asteroid, initialForce);
+			SetRandomTorque(rb_asteroid, initialTorque);
         }
+      
 
-        if(sizeType == asteroidType.Large)
+        if (sizeType == asteroidType.Large)
             transform.position = FindOpenPosition();
     }
 
-   
-    void SetRandomForce(Rigidbody rb, float maxForce)
+
+
+   public void SetRandomForce(Rigidbody rb, float maxForce)
     {
         Vector3 randomForce = maxForce * Random.insideUnitSphere;
         rb.velocity = Vector3.zero;
         rb.AddForce(randomForce);
     }
 
-    void SetRandomTorque(Rigidbody rb, float maxTorque)
+    public void SetRandomTorque(Rigidbody rb, float maxTorque)
     {
         Vector3 randomTorque = maxTorque * Random.insideUnitSphere;
         rb.angularVelocity = Vector3.zero;
@@ -112,6 +114,18 @@ public class AsteroidController : MonoBehaviour
                 SSC.StartCoroutine(SSC.ShieldShip(0.2f));
                 GameManager.instance.GameOver();
                 SSC.player.SetActive(true);
+                switch (sizeType)
+                {
+                    case asteroidType.Large:
+                        GameManager.instance.score += 20;
+                        break;
+                    case asteroidType.Medium:
+                        GameManager.instance.score += 50;
+                        break;
+                    case asteroidType.Small:
+                        GameManager.instance.score += 100;
+                        break;
+                }
                 gameObject.SetActive(false);
                 if (explosion != null)
                 {

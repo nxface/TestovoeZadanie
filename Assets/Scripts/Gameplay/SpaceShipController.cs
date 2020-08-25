@@ -12,6 +12,9 @@ public class SpaceShipController : MonoBehaviour
     public Transform shootPoint;
     public GameObject player;
     public bool Immortal = false;
+    public float sp = 10f;
+    private Vector2 cD = new Vector3(0, 1f, 0);
+    private Transform tO;
 
     private Rigidbody rb_ship;
     private float boostInput;
@@ -22,6 +25,7 @@ public class SpaceShipController : MonoBehaviour
 
     private void Awake()
     {
+        tO = this.transform;
         cameraPos = GameObject.FindGameObjectWithTag("MainCamera").transform;
         rb_ship = GetComponent<Rigidbody>();
     }
@@ -51,15 +55,14 @@ public class SpaceShipController : MonoBehaviour
                 {
                     Shoot();
                 }
+                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 objectPos = tO.position;
+                Vector2 direction = mousePos - objectPos;
+                direction.Normalize();
+                cD = Vector2.Lerp(cD, direction, Time.deltaTime * sp);
+                tO.up = cD;
 
-                Vector3 mousePosMain = Input.mousePosition;
-                mousePosMain.z = Mathf.Abs(cameraPos.position.z);
-                Vector3 lookPos = Camera.main.ScreenToWorldPoint(mousePosMain);
-                lookPos = lookPos - transform.position;
-                float angle = Mathf.Atan2(lookPos.y, lookPos.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-                boostInput = Mathf.Clamp01(Input.GetAxis("Vertical"));
+				boostInput = Mathf.Clamp01(Input.GetAxis("Vertical")+Input.GetAxis("Vertical1"));
             }
 
         }

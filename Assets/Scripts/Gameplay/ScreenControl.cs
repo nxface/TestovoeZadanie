@@ -22,7 +22,7 @@ public class ScreenControl : MonoBehaviour
         float sceneRightEdge = sceneWidth / 2;
         float sceneLeftEdge = sceneRightEdge * -1;
         float sceneTopEdge = (sceneHeight / 2) + 1f;
-        float sceneBottomEdge = (sceneTopEdge * -1) + 1.9f;
+        float sceneBottomEdge = (sceneTopEdge * - 1) + 2f;
 
         if (transform.position.x > sceneRightEdge)
         {

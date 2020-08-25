@@ -166,8 +166,8 @@ public class GameManager : MonoBehaviour
                     asteroidsClone = astPoolSmall.GetPoolObj(); break;
             }
             asteroidsClone.transform.position = pos;
-            asteroidsClone.SetActive(true);
-        }
+			asteroidsClone.SetActive(true);
+		}
     }
 
     bool IsAllAsteroidsDisabled()
