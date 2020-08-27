@@ -9,15 +9,25 @@ public class ObjectPool : MonoBehaviour {
 
     List<GameObject> pObjects;
 
-    void Start()
+  
+    public void CreatObjects(int amount)
     {
         pObjects = new List<GameObject>();
-        for (int i = 0; i < Amount; ++i)
+        for (int i = 0; i < amount; ++i)
         {
             GameObject o = Instantiate(Pobj); o.SetActive(false);
             o.transform.SetParent(this.transform);
-            pObjects.Add(o); 
-        } 
+            pObjects.Add(o);
+        }
+    }
+
+    public void ResetObjects()
+	{
+        foreach (Transform child in gameObject.transform)
+        {
+            Destroy(child.gameObject);
+        }
+        CreatObjects(Amount);
     }
 
     public GameObject GetPoolObj()

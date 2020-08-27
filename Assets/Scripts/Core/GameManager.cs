@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour
 
     public void CheckCurrentStage()
     {       
-        if (IsAllAsteroidsDisabled() && score > 0 && presentState ==  GameState.IS_PLAYING)
+        if (IsAllAsteroidsDisabled() && presentState ==  GameState.IS_PLAYING)
         {
             waves++;
             StartCoroutine(GenerateWithDalay(true,2f));
@@ -170,7 +170,7 @@ public class GameManager : MonoBehaviour
 		}
     }
 
-    bool IsAllAsteroidsDisabled()
+ bool IsAllAsteroidsDisabled()
     {
         foreach (Transform child in astPoolLarge.transform)
         {
@@ -211,6 +211,8 @@ public class GameManager : MonoBehaviour
       
         gameFiledObj.SetActive(true);
         presentState = GameState.IS_PLAYING;
+        spaceShip_pc.GetComponent<SpaceShipController>().Immortal = false;
+        spaceShip_pc.transform.GetChild(0).gameObject.SetActive(true);
     }
 
     public void EnemyDestroyer(bool ed)
@@ -220,8 +222,6 @@ public class GameManager : MonoBehaviour
             GameObject enemy = ES.transform.GetChild(0).gameObject;
             Destroy(enemy);
             EnemyDeath();
-
-
         }
 		else
 		{
@@ -241,19 +241,9 @@ public class GameManager : MonoBehaviour
         spaceShip_pc.transform.position = Vector3.zero;
         spaceShip_pc.transform.rotation = Quaternion.identity;
         spaceShip_pc.GetComponent<Rigidbody>().isKinematic = false;
-
-        foreach (Transform child in astPoolLarge.transform)
-        {
-            child.gameObject.SetActive(false);
-        }
-        foreach (Transform child in astPoolMedium.transform)
-        {
-            child.gameObject.SetActive(false);
-        }
-        foreach (Transform child in astPoolSmall.transform)
-        {
-            child.gameObject.SetActive(false);
-        }
+        astPoolLarge.ResetObjects();
+        astPoolMedium.ResetObjects();
+        astPoolSmall.ResetObjects();
         spaceShip_pc.SetActive(true);
         spaceShip_pc.GetComponent<SpaceShipController>().Immortal = false;
         spaceShip_pc.transform.GetChild(0).gameObject.SetActive(true);

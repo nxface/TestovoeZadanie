@@ -111,8 +111,7 @@ public class AsteroidController : MonoBehaviour
 			{
                 GameManager.instance.lives--;
 
-                SSC.StartCoroutine(SSC.ShieldShip(0.2f));
-                GameManager.instance.GameOver();
+                SSC.StartCoroutine(SSC.ShieldShip(0.2f));                   
                 SSC.player.SetActive(true);
                 switch (sizeType)
                 {
@@ -127,6 +126,7 @@ public class AsteroidController : MonoBehaviour
                         break;
                 }
                 gameObject.SetActive(false);
+                GameManager.instance.GameOver();
                 if (explosion != null)
                 {
                     Instantiate(explosion, transform.position, transform.rotation);

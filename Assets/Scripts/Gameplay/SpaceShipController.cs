@@ -115,6 +115,7 @@ public class SpaceShipController : MonoBehaviour
         bulletClone.GetComponent<Bullet>().Fire(shootPoint.transform.position, Quaternion.identity, transform.up * 10, Color.green, false);
         bulletClone.GetComponent<Bullet>().RemoveBullet(3f);
         SoundManager.instance.PlayClip(EAudioClip.BULLET_SFX, 0.8f);
+  
 
     }
   public  IEnumerator ShieldShip(float sec2)
